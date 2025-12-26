@@ -8,7 +8,7 @@ import { Checkbox } from "@/components/ui/checkbox";
 import heroBg from "@assets/jason-dent-w3eFhqXjkZE-unsplash-scaled_1766778529467.jpg";
 import { motion } from "framer-motion";
 import { CheckCircle2 } from "lucide-react";
-import { useState } from "react";
+import { useState, useRef, useEffect } from "react";
 
 const formSchema = z.object({
   name: z.string().min(2, "Name is required"),
@@ -20,6 +20,22 @@ const formSchema = z.object({
 
 export default function Hero() {
   const [submitted, setSubmitted] = useState(false);
+  const [scrollY, setScrollY] = useState(0);
+  const sectionRef = useRef<HTMLElement>(null);
+
+  useEffect(() => {
+    const handleScroll = () => {
+      if (sectionRef.current) {
+        const rect = sectionRef.current.getBoundingClientRect();
+        const elementScrolled = -rect.top;
+        setScrollY(elementScrolled * 0.5);
+      }
+    };
+
+    window.addEventListener("scroll", handleScroll);
+    return () => window.removeEventListener("scroll", handleScroll);
+  }, []);
+
   const form = useForm<z.infer<typeof formSchema>>({
     resolver: zodResolver(formSchema),
     defaultValues: {
@@ -39,13 +55,13 @@ export default function Hero() {
   }
 
   return (
-    <section id="hero" className="relative min-h-[90vh] flex items-center pt-20">
-      {/* Background Image with Overlay */}
-      <div className="absolute inset-0 z-0">
+    <section id="hero" className="relative min-h-[90vh] flex items-center pt-20 overflow-hidden" ref={sectionRef}>
+      {/* Background Image with Overlay and Parallax */}
+      <div className="absolute inset-0 z-0" style={{ transform: `translateY(${scrollY}px)` }}>
         <img 
           src={heroBg} 
           alt="Modern City Skyline" 
-          className="w-full h-full object-cover"
+          className="w-full h-[120%] object-cover"
         />
         <div className="absolute inset-0 bg-gradient-to-r from-blue-900/90 to-blue-800/40 backdrop-blur-[1px]"></div>
       </div>
