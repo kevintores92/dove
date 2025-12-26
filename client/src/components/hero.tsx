@@ -40,10 +40,15 @@ export default function Hero() {
   }
 
   return (
-    <section id="hero" className="relative min-h-[90vh] flex items-center pt-20 overflow-hidden">
-      {/* Fixed Background Image with Overlay */}
-      <div className="fixed inset-0 w-full h-full z-0" style={{ backgroundImage: `url(${heroBg})`, backgroundAttachment: 'fixed', backgroundSize: 'cover', backgroundPosition: 'center' }}>
-        <div className="absolute inset-0 bg-gradient-to-r from-blue-900/90 to-blue-800/40 backdrop-blur-[1px]"></div>
+    <section id="hero" className="relative min-h-[90vh] flex items-center pt-20">
+      {/* Background Image with Overlay */}
+      <div className="absolute inset-0 z-0">
+        <img 
+          src={heroBg} 
+          alt="Modern City Skyline" 
+          className="w-full h-full object-cover"
+        />
+        <div className="absolute inset-0 bg-gradient-to-r from-blue-950/95 to-blue-900/60 backdrop-blur-[1px]"></div>
       </div>
 
       <div className="container relative z-10 mx-auto px-6 py-20 grid lg:grid-cols-2 gap-12 items-center">
