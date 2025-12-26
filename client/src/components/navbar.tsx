@@ -33,7 +33,9 @@ export default function Navbar() {
             <img 
               src={logo} 
               alt="Dove Equities" 
-              className="h-10 w-auto object-contain"
+              className={`h-10 w-auto object-contain transition-all duration-300 ${
+                isScrolled ? "brightness-100" : "brightness-0 invert"
+              }`}
             />
           </a>
         </Link>

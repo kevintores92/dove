@@ -9,7 +9,7 @@ export default function Footer() {
         <div className="grid md:grid-cols-4 gap-12">
           {/* Brand */}
           <div className="col-span-1 md:col-span-1">
-            <img src={logo} alt="Dove Equities" className="h-12 w-auto mb-6 brightness-0 invert opacity-90" />
+            <img src={logo} alt="Dove Equities" className="h-12 w-auto mb-6 invert opacity-90" />
             <p className="text-sm leading-relaxed opacity-80 mb-6">
               New York's #1 Homebuyers. We buy houses in any condition, providing a fast, fair, and reliable selling experience.
             </p>
