@@ -22,10 +22,10 @@ export default function Navbar() {
   };
 
   return (
-    <nav className={`fixed w-full z-50 transition-all duration-300 ${
+    <nav className={`fixed w-full z-50 transition-all duration-500 ${
       isScrolled 
-        ? "bg-white/90 backdrop-blur-md border-b border-gray-100" 
-        : "bg-transparent border-b border-transparent"
+        ? "bg-white/90 backdrop-blur-md border-b border-gray-100 translate-y-0" 
+        : "bg-transparent border-b border-transparent -translate-y-full"
     }`}>
       <div className="container mx-auto px-6 h-20 flex items-center justify-between">
         <Link href="/">
