@@ -1,5 +1,5 @@
 import { Link } from "wouter";
-import logo from "@assets/Site_Logo_+_Tagline_1766778529464.png";
+import logo from "@assets/Site_Logo_1766779724924.png";
 
 export default function Navbar() {
   const scrollToSection = (id: string) => {
@@ -17,7 +17,7 @@ export default function Navbar() {
             <img 
               src={logo} 
               alt="Dove Equities" 
-              className="h-12 w-auto object-contain"
+              className="h-10 w-auto object-contain"
             />
           </a>
         </Link>

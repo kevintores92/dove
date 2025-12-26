@@ -16,12 +16,13 @@ export default function Features() {
           <p className="text-gray-500 mt-2">Assuring efficiency in time and professional experience.</p>
         </motion.div>
 
-        <div className="grid md:grid-cols-4 gap-8">
+        <div className="grid md:grid-cols-5 gap-8">
           {[
             { icon: Clock, title: "Fast Process", desc: "Close in as little as 7 days" },
             { icon: Shield, title: "Reliable", desc: "Guaranteed cash offers" },
-            { icon: Award, title: "Expertise", desc: "Deep market knowledge" },
+            { icon: Award, title: "No Commission", desc: "Zero hidden fees" },
             { icon: Users, title: "Direct", desc: "No middleman involved" },
+            { icon: Award, title: "Expertise", desc: "Deep market knowledge" },
           ].map((feature, idx) => (
             <motion.div
               key={idx}

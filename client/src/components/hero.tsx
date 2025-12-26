@@ -7,6 +7,8 @@ import { Button } from "@/components/ui/button";
 import { Checkbox } from "@/components/ui/checkbox";
 import heroBg from "@assets/jason-dent-w3eFhqXjkZE-unsplash-scaled_1766778529467.jpg";
 import { motion } from "framer-motion";
+import { CheckCircle2 } from "lucide-react";
+import { useState } from "react";
 
 const formSchema = z.object({
   name: z.string().min(2, "Name is required"),
@@ -17,6 +19,7 @@ const formSchema = z.object({
 });
 
 export default function Hero() {
+  const [submitted, setSubmitted] = useState(false);
   const form = useForm<z.infer<typeof formSchema>>({
     resolver: zodResolver(formSchema),
     defaultValues: {
@@ -30,6 +33,9 @@ export default function Hero() {
 
   function onSubmit(values: z.infer<typeof formSchema>) {
     console.log(values);
+    setSubmitted(true);
+    setTimeout(() => setSubmitted(false), 4000);
+    form.reset();
   }
 
   return (
@@ -82,6 +88,18 @@ export default function Hero() {
             <h3 className="text-2xl font-semibold text-gray-900">Get a Cash Offer</h3>
             <p className="text-sm text-gray-500">Complete the form to start the process.</p>
           </div>
+
+          {submitted && (
+            <motion.div 
+              initial={{ opacity: 0, y: -10 }}
+              animate={{ opacity: 1, y: 0 }}
+              exit={{ opacity: 0 }}
+              className="mb-4 flex items-center gap-3 bg-green-50 border border-green-200 rounded-lg p-4"
+            >
+              <CheckCircle2 className="w-5 h-5 text-green-600" />
+              <span className="text-sm font-medium text-green-700">Thank you! We'll be in touch shortly.</span>
+            </motion.div>
+          )}
 
           <Form {...form}>
             <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-4">
@@ -155,14 +173,14 @@ export default function Hero() {
                     </FormControl>
                     <div className="space-y-1 leading-none">
                       <FormLabel className="text-xs font-normal text-gray-500">
-                        I agree to receive marketing text messages from Dove Equities. Msg frequency varies. Msg & data rates may apply. Reply STOP to cancel.
+                        I have read and agree to the <a href="https://doveequities.h.trustco.ai/#privacyArea" target="_blank" rel="noopener noreferrer" className="text-primary hover:underline">Privacy Policy</a> and <a href="https://doveequities.h.trustco.ai/#termsArea" target="_blank" rel="noopener noreferrer" className="text-primary hover:underline">Terms and Conditions</a>. By submitting the contact form and signing up for texts, you consent to receive marketing text messages from Dove Equities at the number provided. Consent is not a condition of purchase. Message frequency varies. Message and data rates may apply. You can unsubscribe at any time by replying STOP. Text HELP to get help. Please read our <a href="https://doveequities.h.trustco.ai/#privacyArea" target="_blank" rel="noopener noreferrer" className="text-primary hover:underline">Privacy Policy</a> for more details.
                       </FormLabel>
                     </div>
                   </FormItem>
                 )}
               />
 
-              <Button type="submit" className="w-full bg-primary hover:bg-blue-700 text-white font-semibold py-6 text-lg shadow-lg hover:shadow-blue-500/25 transition-all">
+              <Button type="submit" className="w-full bg-primary hover:bg-blue-700 text-white font-semibold py-3 text-base shadow-lg hover:shadow-blue-500/25 transition-all">
                 Submit Request
               </Button>
             </form>
@@ -170,12 +188,6 @@ export default function Hero() {
         </motion.div>
       </div>
       
-      {/* Decorative Wave Divider */}
-      <div className="absolute bottom-0 left-0 w-full overflow-hidden leading-[0]">
-        <svg className="relative block w-[calc(100%+1.3px)] h-[80px]" data-name="Layer 1" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 120" preserveAspectRatio="none">
-            <path d="M321.39,56.44c58-10.79,114.16-30.13,172-41.86,82.39-16.72,168.19-17.73,250.45-.39C823.78,31,906.67,72,985.66,92.83c70.05,18.48,146.53,26.09,214.34,3V0H0V27.35A600.21,600.21,0,0,0,321.39,56.44Z" className="fill-white"></path>
-        </svg>
-      </div>
     </section>
   );
 }
