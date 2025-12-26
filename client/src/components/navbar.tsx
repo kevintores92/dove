@@ -53,16 +53,18 @@ export default function Navbar() {
           <button onClick={() => scrollToSection('contact')} className={`text-sm font-medium transition-colors ${
             isScrolled ? "text-gray-600 hover:text-primary" : "text-white hover:text-blue-200"
           }`}>Contact Us</button>
-          <button 
-            onClick={() => scrollToSection('hero')}
-            className={`px-5 py-2.5 text-sm font-semibold rounded-lg transition-all ${
+          <a 
+            href="https://doveequities.h.trustco.ai"
+            target="_blank"
+            rel="noopener noreferrer"
+            className={`px-5 py-2.5 text-sm font-semibold rounded-lg transition-all inline-block ${
               isScrolled 
                 ? "text-white bg-primary hover:bg-blue-700 shadow-md hover:shadow-lg" 
                 : "text-primary bg-white hover:bg-gray-100 shadow-md hover:shadow-lg"
             }`}
           >
             Get a Cash Offer
-          </button>
+          </a>
         </div>
       </div>
     </nav>

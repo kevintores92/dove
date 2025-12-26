@@ -1,11 +1,6 @@
 import { motion } from "framer-motion";
-import { Button } from "@/components/ui/button";
 
 export default function Cta() {
-  const scrollToForm = () => {
-    document.getElementById('hero')?.scrollIntoView({ behavior: 'smooth' });
-  };
-
   return (
     <section className="py-24 bg-gradient-to-r from-blue-500 to-blue-600 relative overflow-hidden">
       {/* Abstract Shapes */}
@@ -22,14 +17,14 @@ export default function Cta() {
           <h2 className="text-3xl md:text-5xl font-bold text-white mb-6 leading-tight">
             Join thousands of satisfied homeowners and experience the best way to sell real estate.
           </h2>
-          <Button 
-            onClick={scrollToForm}
-            size="lg" 
-            variant="secondary" 
-            className="mt-4 bg-white text-primary hover:bg-gray-100 font-bold px-8 py-6 rounded-xl text-lg shadow-xl"
+          <a 
+            href="https://doveequities.h.trustco.ai"
+            target="_blank"
+            rel="noopener noreferrer"
+            className="mt-4 inline-block bg-white text-primary hover:bg-gray-100 font-bold px-8 py-6 rounded-xl text-lg shadow-xl transition-all"
           >
             Sell My House For Cash
-          </Button>
+          </a>
         </motion.div>
       </div>
       
