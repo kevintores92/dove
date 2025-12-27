@@ -1,33 +1,31 @@
 import { defineConfig } from "vite";
 import react from "@vitejs/plugin-react";
-import tailwindcss from "@tailwindcss/vite";
 import path from "path";
-import { fileURLToPath } from "url";
 import runtimeErrorOverlay from "@replit/vite-plugin-runtime-error-modal";
 import { metaImagesPlugin } from "./vite-plugin-meta-images";
+import tailwindcss from "tailwindcss"; // Import only tailwindcss, not @tailwindcss/vite
+import autoprefixer from "autoprefixer";
+import { fileURLToPath } from "url";
 
-// Convert ES module URL to filesystem path
 const __dirname = path.dirname(fileURLToPath(import.meta.url));
 
 const isProd = process.env.NODE_ENV === "production";
 const isReplit = process.env.REPL_ID !== undefined;
 
 export default defineConfig({
-  // Root folder of your Vite app
   root: path.resolve(__dirname, "client"),
 
   plugins: [
     react(),
-    tailwindcss(),
     metaImagesPlugin(),
-
-    // Replit-only dev helpers (only active in dev on Replit)
-    ...(isProd || !isReplit
-      ? []
-      : [
-          runtimeErrorOverlay(),
-        ]),
+    ...(isProd || !isReplit ? [] : [runtimeErrorOverlay()]),
   ],
+
+  css: {
+    postcss: {
+      plugins: [tailwindcss(), autoprefixer()],
+    },
+  },
 
   resolve: {
     alias: {
