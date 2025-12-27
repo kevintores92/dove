@@ -1,5 +1,5 @@
-import { build as esbuild } from "esbuild";
 import { build as viteBuild } from "vite";
+import { build as esbuild } from "esbuild";
 import { rm, readFile } from "fs/promises";
 import path from "path";
 
@@ -22,19 +22,19 @@ const allowlist = [
 ];
 
 async function buildAll() {
-  await rm("dist", { recursive: true, force: true });
+  // Clean dist
+  await rm(path.resolve("dist"), { recursive: true, force: true });
 
   console.log("building client...");
+
+  // Programmatically build Vite client using the config file
   await viteBuild({
-    root: path.resolve("client"),
-    build: {
-      outDir: path.resolve("dist/public"),
-      emptyOutDir: true
-    }
+    configFile: path.resolve(__dirname, "../vite.config.ts")
   });
 
   console.log("building server...");
-  const pkg = JSON.parse(await readFile("package.json", "utf-8"));
+
+  const pkg = JSON.parse(await readFile(path.resolve("package.json"), "utf-8"));
 
   const allDeps = [
     ...Object.keys(pkg.dependencies ?? {}),
@@ -44,12 +44,12 @@ async function buildAll() {
   const externals = allDeps.filter(dep => !allowlist.includes(dep));
 
   await esbuild({
-    entryPoints: ["server/index.ts"],
+    entryPoints: [path.resolve("server/index.ts")],
     platform: "node",
     bundle: true,
     format: "cjs",
     target: "node20",
-    outfile: "dist/index.cjs",
+    outfile: path.resolve("dist/index.cjs"),
     external: externals,
     minify: true,
     sourcemap: false,
@@ -58,6 +58,8 @@ async function buildAll() {
     },
     logLevel: "info"
   });
+
+  console.log("Build completed successfully!");
 }
 
 buildAll().catch((err) => {
