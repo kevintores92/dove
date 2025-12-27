@@ -3,8 +3,7 @@ import react from "@vitejs/plugin-react";
 import path from "path";
 import runtimeErrorOverlay from "@replit/vite-plugin-runtime-error-modal";
 import { metaImagesPlugin } from "./vite-plugin-meta-images";
-import tailwindcss from "tailwindcss"; // Import only tailwindcss, not @tailwindcss/vite
-import autoprefixer from "autoprefixer";
+// PostCSS plugins are configured in postcss.config.js
 import { fileURLToPath } from "url";
 
 const __dirname = path.dirname(fileURLToPath(import.meta.url));
@@ -21,11 +20,7 @@ export default defineConfig({
     ...(isProd || !isReplit ? [] : [runtimeErrorOverlay()]),
   ],
 
-  css: {
-    postcss: {
-      plugins: [tailwindcss(), autoprefixer()],
-    },
-  },
+  // Let PostCSS load `postcss.config.js` automatically
 
   resolve: {
     alias: {
