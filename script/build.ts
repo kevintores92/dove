@@ -2,8 +2,12 @@ import { build as viteBuild } from "vite";
 import { build as esbuild } from "esbuild";
 import { rm, readFile } from "fs/promises";
 import path from "path";
+import { fileURLToPath } from "url";
 
-// server deps to bundle to reduce cold start cost
+// ES module safe __dirname
+const __dirname = path.dirname(fileURLToPath(import.meta.url));
+
+// server deps to bundle
 const allowlist = [
   "axios",
   "connect-pg-simple",
@@ -22,19 +26,15 @@ const allowlist = [
 ];
 
 async function buildAll() {
-  // Clean dist
-  await rm(path.resolve("dist"), { recursive: true, force: true });
+  await rm(path.resolve(__dirname, "../dist"), { recursive: true, force: true });
 
   console.log("building client...");
-
-  // Programmatically build Vite client using the config file
   await viteBuild({
     configFile: path.resolve(__dirname, "../vite.config.ts")
   });
 
   console.log("building server...");
-
-  const pkg = JSON.parse(await readFile(path.resolve("package.json"), "utf-8"));
+  const pkg = JSON.parse(await readFile(path.resolve(__dirname, "../package.json"), "utf-8"));
 
   const allDeps = [
     ...Object.keys(pkg.dependencies ?? {}),
@@ -44,12 +44,12 @@ async function buildAll() {
   const externals = allDeps.filter(dep => !allowlist.includes(dep));
 
   await esbuild({
-    entryPoints: [path.resolve("server/index.ts")],
+    entryPoints: [path.resolve(__dirname, "../server/index.ts")],
     platform: "node",
     bundle: true,
     format: "cjs",
     target: "node20",
-    outfile: path.resolve("dist/index.cjs"),
+    outfile: path.resolve(__dirname, "../dist/index.cjs"),
     external: externals,
     minify: true,
     sourcemap: false,
